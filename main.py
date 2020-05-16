@@ -2,11 +2,16 @@
 
 from matrix import Matrix
 import time
+import board
+import neopixel
 import os
 import random
 import sys
 
-leds = Matrix(8, 32)
+leds = Matrix(32, 8)
+leds.set_high(1, 1)
+#time.sleep(0.1)
+leds.set_low(1, 1)
 
 def clear_console():
 	"""
@@ -76,6 +81,7 @@ def print_grid(rows, cols, grid, generation):
 	"""
 
 	clear_console()
+	leds.clear()
 
 	# A single output string is used to help reduce the flickering caused by printing multiple lines
 	output_str = ""
@@ -86,10 +92,9 @@ def print_grid(rows, cols, grid, generation):
 		for col in range(cols):
 			if grid[row][col] == 0:
 				output_str += ". "
-				leds.set_high(row, col)
 			else:
 				output_str += "@ "
-				leds.set_low(row, col)
+				leds.set_high(col, row)
 		output_str += "\n\r"
 	print(output_str, end=" ")
 

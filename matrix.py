@@ -28,9 +28,15 @@ class Matrix:
 					self.lut[y][x] = i
 					i = i + 1
 
+	def clear(self):
+		self.pixels.fill(self.OFF)
 
 	def set(self, x, y, rgb):
-		self.pixels[self.lut[x][y]] = rgb
+		if (x >= self.width):
+			return
+		if (y >= self.height):
+			return
+		self.pixels[self.lut[y][x]] = rgb
 
 	def set_high(self, x, y):
 		self.set(x, y, self.ON)
@@ -38,15 +44,15 @@ class Matrix:
 	def set_low(self, x, y):
 		self.set(x, y, self.OFF)
 
-strip = Matrix(32, 8)
+#strip = Matrix(32, 8)
 
-for x in range(0, 32):
-	for y in range(0, 8):
-		if (x == y):
-			strip.set_high(x, y)
-			time.sleep(0.1)
-			strip.set_low(x, y)
-
+#for x in range(0, 32):
+#	for y in range(0, 8):
+#		if (x == y):
+#			strip.set_high(x, y)
+#			time.sleep(0.1)
+#			strip.set_low(x, y)
+#
 
 
 
