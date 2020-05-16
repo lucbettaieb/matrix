@@ -79,12 +79,14 @@ def print_grid(rows, cols, grid, prev_grid, generation):
 	if generation == 0:
 		return
 
+	leds.clear()
+
 	for row in range(rows):
 		for col in range(cols):
-			if prev_grid[row][col] == 0 and grid[row][col] != 0:
+			if grid[row][col] != 0:
 				leds.set_high(col, row)
-			elif grid[row][col] == 0:
-				leds.set_low(col, row)
+			#elif grid[row][col] == 0:
+			#	leds.set_low(col, row)
 
 
 
