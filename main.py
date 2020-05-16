@@ -9,9 +9,6 @@ import random
 import sys
 
 leds = Matrix(32, 8)
-leds.set_high(1, 1)
-#time.sleep(0.1)
-leds.set_low(1, 1)
 
 def clear_console():
 	"""
@@ -70,7 +67,7 @@ def create_initial_grid(rows, cols):
 	return grid
 
 
-def print_grid(rows, cols, grid, generation):
+def print_grid(rows, cols, grid, prev_grid, generation):
 	"""
 	Prints to console the Game of Life grid
 
@@ -79,24 +76,16 @@ def print_grid(rows, cols, grid, generation):
 	:param grid: Int[][] - The list of lists that will be used to represent the Game of Life grid
 	:param generation: Int - The current generation of the Game of Life grid
 	"""
+	if generation == 0:
+		return
 
-	clear_console()
-	leds.clear()
-
-	# A single output string is used to help reduce the flickering caused by printing multiple lines
-	output_str = ""
-
-	# Compile the output string together and then print it to console
-	output_str += "Generation {0} - To exit the program early press <Ctrl-C>\n\r".format(generation)
 	for row in range(rows):
 		for col in range(cols):
-			if grid[row][col] == 0:
-				output_str += ". "
-			else:
-				output_str += "@ "
+			if prev_grid[row][col] == 0 and grid[row][col] != 0:
 				leds.set_high(col, row)
-		output_str += "\n\r"
-	print(output_str, end=" ")
+			elif grid[row][col] == 0:
+				leds.set_low(col, row)
+
 
 
 def create_next_grid(rows, cols, grid, next_grid):
@@ -199,14 +188,14 @@ def run_game():
 
 	"""
 
-	clear_console()
+	#clear_console()
 
 	# Get the number of rows and columns for the Game of Life grid
-	rows = get_integer_value("Enter the number of rows (10-60): ", 10, 60)
-	cols = get_integer_value("Enter the number of cols (10-118): ", 10, 118)
+	rows = 10 #get_integer_value("Enter the number of rows (10-60): ", 10, 60)
+	cols = 32 #get_integer_value("Enter the number of cols (10-118): ", 10, 118)
 
 	# Get the number of generations that the Game of Life should run for
-	generations = get_integer_value("Enter the number of generations (1-100000): ", 1, 100000)
+	generations = 1000 #get_integer_value("Enter the number of generations (1-100000): ", 1, 100000)
 	resize_console(rows, cols)
 
 	# Create the initial random Game of Life grids
@@ -218,12 +207,13 @@ def run_game():
 	for gen in range(1, generations + 1):
 		if not grid_changing(rows, cols, current_generation, next_generation):
 			break
-		print_grid(rows, cols, current_generation, gen)
+#		print_grid(rows, cols, current_generation, gen)
 		create_next_grid(rows, cols, current_generation, next_generation)
 		time.sleep(1 / 5.0)
 		current_generation, next_generation = next_generation, current_generation
+		print_grid(rows, cols, next_generation, current_generation, gen)
 
-	print_grid(rows, cols, current_generation, gen)
+	print_grid(rows, cols, current_generation, None, gen)
 	input("Press <Enter> to exit.")
 
 

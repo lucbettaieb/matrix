@@ -13,7 +13,7 @@ class Matrix:
 		self.pixels = neopixel.NeoPixel(board.D18, width*height)
 		self.lut = [[0 for x in range(width)] for y in range(height)]
 
-		self.ON = (40, 40, 40)
+		self.ON = (1, 1, 1)
 		self.OFF = (0, 0, 0)
 
 		i = 0
@@ -31,6 +31,10 @@ class Matrix:
 	def clear(self):
 		self.pixels.fill(self.OFF)
 
+	def clear_pixels(self, to_clear):
+		for pixel in to_clear:
+			self.set(pixel.x, pixel.y, OFF)
+
 	def set(self, x, y, rgb):
 		if (x >= self.width):
 			return
@@ -44,15 +48,7 @@ class Matrix:
 	def set_low(self, x, y):
 		self.set(x, y, self.OFF)
 
-#strip = Matrix(32, 8)
 
-#for x in range(0, 32):
-#	for y in range(0, 8):
-#		if (x == y):
-#			strip.set_high(x, y)
-#			time.sleep(0.1)
-#			strip.set_low(x, y)
-#
 
 
 
