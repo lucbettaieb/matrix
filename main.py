@@ -86,10 +86,10 @@ def print_grid(rows, cols, grid, generation):
 		for col in range(cols):
 			if grid[row][col] == 0:
 				output_str += ". "
-		leds.set_high(row, col)
+				leds.set_high(row, col)
 			else:
 				output_str += "@ "
-		leds.set_low(row, col)
+				leds.set_low(row, col)
 		output_str += "\n\r"
 	print(output_str, end=" ")
 
