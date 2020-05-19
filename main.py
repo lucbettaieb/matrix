@@ -197,7 +197,7 @@ def run_game():
 	cols = 32 #get_integer_value("Enter the number of cols (10-118): ", 10, 118)
 
 	# Get the number of generations that the Game of Life should run for
-	generations = 1000 #get_integer_value("Enter the number of generations (1-100000): ", 1, 100000)
+	generations = 500 #get_integer_value("Enter the number of generations (1-100000): ", 1, 100000)
 	resize_console(rows, cols)
 
 	# Create the initial random Game of Life grids
@@ -211,12 +211,12 @@ def run_game():
 			break
 #		print_grid(rows, cols, current_generation, gen)
 		create_next_grid(rows, cols, current_generation, next_generation)
-		time.sleep(1 / 5.0)
+		time.sleep(1 / 60.0)
 		current_generation, next_generation = next_generation, current_generation
 		print_grid(rows, cols, next_generation, current_generation, gen)
 
 	print_grid(rows, cols, current_generation, None, gen)
-	input("Press <Enter> to exit.")
+#	input("Press <Enter> to exit.")
 
 
 # Start the Game of Life
